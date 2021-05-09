@@ -92,7 +92,8 @@ LABEL maintainer.0="João Fonseca (@joaopaulofonseca)" \
   maintainer.1="Pedro Branco (@pedrobranco)" \
   maintainer.2="Rui Marinho (@ruimarinho)"
 
-RUN adduser -S bitcoin
+RUN addgroup -S bitcoin
+RUN adduser -G bitcoin -H -S bitcoin
 RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories
 RUN apk --no-cache add \
   boost-chrono \
@@ -102,6 +103,7 @@ RUN apk --no-cache add \
   libevent \
   libressl \
   libzmq \
+  shadow \
   su-exec
 
 ENV BITCOIN_DATA=/home/bitcoin/.bitcoin

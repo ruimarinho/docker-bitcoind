@@ -88,6 +88,18 @@ bitcoin-core:
     -regtest=1
 ```
 
+### Using a custom user
+
+By default, this image creates the `bitcoin` user as a system user, which translates into `100:101` on Debian and `999:999` on Alpine. You customize the user and group ids using the environment variables `$UID` and `$GID` as follows:
+
+```sh
+❯ docker run -e UID=120 -e GID=120 -it --rm ruimarinho/bitcoin-core \
+  -printtoconsole \
+  -regtest=1
+```
+
+This will chown the `$BITCOIN_DATA` directory with uid and gid `120:120`.
+
 ### Using RPC to interact with the daemon
 
 There are two communications methods to interact with a running Bitcoin Core daemon.
@@ -229,7 +241,7 @@ curl --data-binary '{"jsonrpc":"1.0","id":"1","method":"getnetworkinfo","params"
 
 #### Signet
 
-- JSON-RPC/REST: 38332 
+- JSON-RPC/REST: 38332
 - P2P: 38333
 
 ## Archived tags
