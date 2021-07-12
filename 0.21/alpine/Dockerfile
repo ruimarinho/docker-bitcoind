@@ -1,5 +1,5 @@
 # Build stage for BerkeleyDB
-FROM alpine as berkeleydb
+FROM alpine:3.7 as berkeleydb
 
 RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories
 RUN apk --no-cache add autoconf
@@ -23,7 +23,7 @@ RUN make install
 RUN rm -rf ${BERKELEYDB_PREFIX}/docs
 
 # Build stage for Bitcoin Core
-FROM alpine as bitcoin-core
+FROM alpine:3.7 as bitcoin-core
 
 COPY --from=berkeleydb /opt /opt
 
